@@ -1,0 +1,97 @@
+<% include header %>
+
+<script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js"></script>
+
+  <div class="container bump-me">
+
+    <div class="body-content">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">judge</h3>
+        </div>
+        <div class="panel-body">
+          <div id="publisher"></div>
+        </div>
+        <div class="panel-footer">
+          <form class="archive-options">
+              <fieldset class="archive-options-fields">
+                  <div class="form-group">
+                      <p class="help-block">Archive Options:</p>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" name="hasAudio" checked> Audio
+                      </label>
+                      <label class="checkbox-inline">
+                          <input type="checkbox" name="hasVideo" checked> Video
+                      </label>
+                  </div>
+
+                  <div class="form-group">
+                      <p class="help-block">Output Mode:</p>
+                      <label class="radio-inline">
+                          <input type="radio" name="outputMode" value="composed" checked> Composed
+                      </label>
+                      <label class="radio-inline">
+                          <input type="radio" name="outputMode" value="individual"> Individual
+                      </label>
+                  </div>
+              </fieldset>
+          </form>
+          <button class="btn btn-danger start">Start archiving</button>
+          <button class="btn btn-success stop">Stop archiving</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">lawyers</h3>
+        </div>
+        <div class="panel-body">
+          <div id="lawyers"></div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Subscribers</h3>
+        </div>
+        <div class="panel-body">
+          <div id="subscribers"></div>
+        </div>
+    </div>
+
+    <div id="textchat" class="input-group">
+        <span class="input-group-addon" >Stenographer</span>
+        <form id="chat">
+          <input type="text" id="msgTxt" class="form-control" placeholder="Details"
+
+          ></input>
+        </form>
+    </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><a href="#" class="trans downl navbar-link">Create Download Link</a></h3>
+      </div>
+      <div class="panel-body" style="max-height: 400px ;overflow-y: scroll;">
+        <p id="history"></p>
+      </div>
+    </div>
+
+    
+
+  </div>
+
+    <script>
+        var sessionId = "<%= sessionId %>";
+        var apiKey = "<%= apiKey %>";
+        var token = "<%= token %>";
+
+    </script>
+    <script src="/js/host.js"></script>
+
+  </div>
+
+<% include footer %>

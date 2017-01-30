@@ -1,0 +1,69 @@
+<% include header %>
+
+<script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js"></script>
+
+  <div class="container bump-me">
+
+    <div class="body-content">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Judge</h3>
+        </div>
+        <div class="panel-body">
+          <div id="publisher"></div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Lawyers</h3>
+        </div>
+        <div class="panel-body media">
+          <div id="lawyers"></div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">My View</h3>
+        </div>
+        <div class="panel-body media">
+          <div id="ME" class="media-left"></div>
+          <div class="well media-body">
+            Judge Chat:
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Other Witnesses</h3>
+        </div>
+        <div class="panel-body">
+          <div id="subscribers"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Instructions</h3>
+      </div>
+      <div class="panel-body">
+          
+      </div>
+    </div>
+  </div>
+
+    <script>
+        var sessionId = "<%= sessionId %>";
+        var apiKey = "<%= apiKey %>";
+        var token = "<%= token %>";
+    </script>
+    <script src="/js/participant.js"></script>
+
+  </div>
+
+<% include footer %>

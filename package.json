@@ -1,0 +1,27 @@
+{
+  "name": "yoga-go",
+  "version": "1.0.0",
+  "description": "OpenTok sample application",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "opentok": "^2.5.0",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gratnam/yoga-go.git"
+  },
+  "author": "Geetha Ratnam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gratnam/yoga-go/issues"
+  },
+  "homepage": "https://github.com/gratnam/yoga-go#readme"
+}
