@@ -142,7 +142,7 @@ app.get('/delete/:archiveId', function(req, res) {
 
 // Start the express app
 function init() {
-  app.listen(3000, function() {
-    console.log('Your app is now ready at http://localhost:3000/');
+  app.listen(process.env.PORT, function() {
+    console.log('Your app is now ready at http://localhost:'+process.env.PORT'/');
   });
 }

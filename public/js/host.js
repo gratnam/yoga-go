@@ -71,15 +71,14 @@ session.on('archiveStopped', function(event) {
 
 //Stenographer messages + lawyer objections
 session.on('signal:msg', function(event) {
-  console.log(event.from.connectionId)
+  console.log(event.data)
   var msg = document.createElement('p');
   var d = new Date();
 
-  if(event.data === 'objection'){
+  if(event.data === 'Objection'){
     event.data = 'Objection from lawyer: ' + event.from.connectionId;
     $('#lawyers').parent().parent().removeClass('panel-default').addClass('panel-danger');
-    $('#sustained').append('<a class="sustained">Sustained</a> / <a class="overruled">Overruled</a>');
-  }
+    $('#sustained').append('<a class="sustained btn btn-success">Sustained</a><a class="overruled btn btn-danger">Overruled</a>');
 
   $('.sustained').click(function(){
     $('#lawyers').parent().parent().removeClass('panel-danger').addClass('panel-default');
@@ -88,6 +87,7 @@ session.on('signal:msg', function(event) {
       data: 'Sustained'
     }, function(error) {
       if (!error) {
+        $('.sustained, .overruled').remove();
       }
     });
   });
@@ -98,10 +98,12 @@ session.on('signal:msg', function(event) {
       data: 'Overruled'
     }, function(error) {
       if (!error) {
+        $('.overruled, .sustained').remove();
       }
     });
   });
 
+  }
   msg.textContent = d.toUTCString() + ' : ' + event.data;
   msg.className = event.from.connectionId === session.connection.connectionId ? 'mine' : 'theirs';
   $('#history').append(msg);
@@ -132,6 +134,7 @@ $(document).ready(function() {
     uriContent = "data:application/octet-stream," + encodeURIComponent(content);
     $('.trans').replaceWith('<a href="'+uriContent+'" class="trans navbar-link">Ready to download</a>');
   })
+
 });
 
 function disableForm() {
@@ -140,6 +143,7 @@ function disableForm() {
 function enableForm() {
   $(".archive-options-fields").removeAttr('disabled');
 }
+
 
 // Stenographer Chat
 var form = document.querySelector('#chat');
