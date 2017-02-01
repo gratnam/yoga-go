@@ -5,10 +5,12 @@
       <div class="row">
         <div class="col-lg-6 col-offset-1">
           <div class="panel panel-default">
-            <div class="panel-heading">Create an archive</div>
+            <div class="panel-heading">
+                <h2 class="url"></h2>
+            </div>
             <div class="panel-body">
               <p>
-                Share this url to add users to this court session.
+                Share the above url to add users to this court session.
               </p>
             </div>
             <div class="panel-footer">
@@ -41,5 +43,8 @@
 
     </div>
   </div>
-
+<script>var x = document.URL;
+  console.log(x);
+    $('.url').append(x);
+  </script>
 <% include footer %>
