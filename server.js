@@ -20,22 +20,35 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Initialize OpenTok
-var opentok = new OpenTok(apiKey, apiSecret);
+var home, name, opentok, sessionId;
+var startTok = function(){
+  opentok = new OpenTok(apiKey, apiSecret);
+  opentok.createSession({ mediaMode: 'routed' },function(err, session) {
+      if (err) throw err;
+      app.set('sessionId', session.sessionId);
+      // We will wait on starting the app until this is done
+    });
+}
 
-// Create a session and store it in the express app
-opentok.createSession({ mediaMode: 'routed' },function(err, session) {
-  if (err) throw err;
-  app.set('sessionId', session.sessionId);
-  // We will wait on starting the app until this is done
-  init();
-});
+init();
 
 app.get('/', function(req, res) {
+  startTok();
   res.render('index.ejs');
 });
 
+app.post('/', function(req, res) {
+    home = app.get('sessionId');
+    name = '/name'+req.body.courtName;
+    sessionId = app.get('sessionId');
+});
+
+app.get('/name/:name', function(req, res){
+  sessionId = app.get('sessionId');
+  res.render('name.ejs');
+});
+
 app.get('/host', function(req, res) {
-  console.log('host')
   var sessionId = app.get('sessionId'),
       // generate a fresh token for this client
       token = opentok.generateToken(sessionId, { role: 'moderator' });
@@ -44,7 +57,6 @@ app.get('/host', function(req, res) {
     apiKey: apiKey,
     sessionId: sessionId,
     token: token,
-
   });
 });
 
@@ -140,7 +152,7 @@ app.get('/delete/:archiveId', function(req, res) {
   });
 });
 
-// Start the express app
+// replace 3000 with process.env.PORT
 function init() {
   app.listen(process.env.PORT, function() {
     console.log('Your app is now ready at http://localhost:'+process.env.PORT+'/');

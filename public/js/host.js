@@ -13,7 +13,6 @@ var tokenBoot = {}
 var userInfo = {}
 
 session.on('streamCreated', function(event) {
-  console.log('streamcreated', event)
   var ID = event.stream.streamId;
   var streamObj = event.stream;
   var chatObj = event.stream.connection;
@@ -42,7 +41,6 @@ session.on('streamCreated', function(event) {
 
   //signal specific witness
   $('#DM' + ID).submit(function(event){
-    console.log($(this).parent().parent().attr('id'));
     event.preventDefault();
     var who = userInfo[ID].chatObj;
     session.signal({
@@ -71,48 +69,45 @@ session.on('archiveStopped', function(event) {
 
 //Stenographer messages + lawyer objections
 session.on('signal:msg', function(event) {
-  console.log(event.data)
   var msg = document.createElement('p');
   var d = new Date();
 
-  if(event.data === 'Objection'){
+  if(event.data === 'Objection' && $('.sustained').html()===undefined ){
     event.data = 'Objection from lawyer: ' + event.from.connectionId;
     $('#lawyers').parent().parent().removeClass('panel-default').addClass('panel-danger');
     $('#sustained').append('<a class="sustained btn btn-success">Sustained</a><a class="overruled btn btn-danger">Overruled</a>');
 
-  $('.sustained').click(function(){
-    $('#lawyers').parent().parent().removeClass('panel-danger').addClass('panel-default');
-    session.signal({
-      type: 'msg',
-      data: 'Sustained'
-    }, function(error) {
-      if (!error) {
-        $('.sustained, .overruled').remove();
-      }
+    $('.sustained').click(function(){
+      $('#lawyers').parent().parent().removeClass('panel-danger').addClass('panel-default');
+      session.signal({
+        type: 'msg',
+        data: 'Sustained'
+      }, function(error) {
+        if (!error) {
+          $('.sustained, .overruled').remove();
+        }
+      });
     });
-  });
-  $('.overruled').click(function(){
-    $('#lawyers').parent().parent().removeClass('panel-danger').addClass('panel-default');
-    session.signal({
-      type: 'msg',
-      data: 'Overruled'
-    }, function(error) {
-      if (!error) {
-        $('.overruled, .sustained').remove();
-      }
+    $('.overruled').click(function(){
+      $('#lawyers').parent().parent().removeClass('panel-danger').addClass('panel-default');
+      session.signal({
+        type: 'msg',
+        data: 'Overruled'
+      }, function(error) {
+        if (!error) {
+          $('.overruled, .sustained').remove();
+        }
+      });
     });
-  });
-
   }
+
   msg.textContent = d.toUTCString() + ' : ' + event.data;
   msg.className = event.from.connectionId === session.connection.connectionId ? 'mine' : 'theirs';
   $('#history').append(msg);
-
   msg.scrollIntoView();
 });
 
 session.on('connectionDestroyed', function(event) {
-  console.log('destroyed', event);
   $("#"+tokenBoot[event.target.token]).remove();
 });
 

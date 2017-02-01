@@ -10,9 +10,7 @@ session.connect(apiKey, token, function(err, info) {
 
 session.on('streamCreated', function(event) {
 
-  console.log(event.stream.name)
   if(event.stream.name === 'host'){
-
     session.subscribe(event.stream, "publisher", { insertMode : "append" });
   }
   if(event.stream.name === 'participant'){
@@ -29,7 +27,6 @@ session.on("signal", function(event) {
   $('.well').append('<p>'+event.data+'</p>');
 });
 publisher.on("streamDestroyed", function(event) {
-  console.log("DESTROY ALL HUMANS");
   $(".well").hide();
 });
 

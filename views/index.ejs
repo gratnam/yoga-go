@@ -1,15 +1,27 @@
 <% include header %>
-<script src="/js/index.js"></script>
 
   <div class="container bump-me">
-
-
     <div class="body-content">
-
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Create Court Room</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="name form-control" placeholder="Trial">
+            </div>
+            <div class="modal-footer">
+              <a class="closeName btn btn-default">Close</a>
+              <button type="button" class="saveName btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-lg-6 col-offset-1">
-
           <div class="panel panel-default">
             <div class="panel-heading">Create an archive</div>
             <div class="panel-body">
