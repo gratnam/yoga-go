@@ -30,17 +30,29 @@ var startTok = function(){
     });
 }
 
+startTok();
 init();
 
+var chatRooms = {}
+
 app.get('/', function(req, res) {
-  startTok();
+  //startTok();
   res.render('index.ejs');
 });
 
 app.post('/', function(req, res) {
-    home = app.get('sessionId');
-    name = '/name'+req.body.courtName;
-    sessionId = app.get('sessionId');
+    name = req.body.courtName;
+    if(!chatRooms[name]){
+      sessionN = app.get('sessionId');
+      console.log('room is good to go', sessionN);
+      chatRooms[name] = sessionN;
+      console.log(chatRooms);
+    }
+    else{
+      app.set('sessionId', chatRooms[name]);
+      console.log('fail', chatRooms);
+    }
+    
 });
 
 app.get('/name/:name', function(req, res){
@@ -48,7 +60,7 @@ app.get('/name/:name', function(req, res){
   res.render('name.ejs');
 });
 
-app.get('/host', function(req, res) {
+app.get('/host/:name', function(req, res) {
   var sessionId = app.get('sessionId'),
       // generate a fresh token for this client
       token = opentok.generateToken(sessionId, { role: 'moderator' });
@@ -72,7 +84,7 @@ app.get('/host', function(req, res) {
 //   });
 // });
 
-app.get('/lawyer', function(req, res) {
+app.get('/lawyer/:name', function(req, res) {
   var sessionId = app.get('sessionId'),
       // generate a fresh token for this client
       token = opentok.generateToken(sessionId, { role: 'publisher' });
@@ -85,7 +97,7 @@ app.get('/lawyer', function(req, res) {
   });
 });
 
-app.get('/participant', function(req, res) {
+app.get('/participant/:name', function(req, res) {
   var sessionId = app.get('sessionId'),
       // generate a fresh token for this client
       token = opentok.generateToken(sessionId, { role: 'publisher' });
@@ -154,7 +166,7 @@ app.get('/delete/:archiveId', function(req, res) {
 
 // replace 3000 with process.env.PORT
 function init() {
-  app.listen(process.env.PORT, function() {
+  app.listen(3000, function() {
     console.log('Your app is now ready at http://localhost:'+process.env.PORT+'/');
   });
 }

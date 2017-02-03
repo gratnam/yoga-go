@@ -6,7 +6,7 @@
         <div class="col-lg-6 col-offset-1">
           <div class="panel panel-default">
             <div class="panel-heading">
-                <h2 class="url"></h2>
+                <h3 class="url"></h2>
             </div>
             <div class="panel-body">
               <p>
@@ -15,9 +15,9 @@
             </div>
             <div class="panel-footer">
               <a class="judge btn btn-danger" href="/host">Judge Login</a>
-              <a class="btn btn-warning" href="/host">Stenographer Login</a>
-              <a class="btn btn-primary" href="/lawyer">Lawyer Login</a>
-              <a class="btn btn-info" href="/participant">Witness Login</a>
+              <a class="sten btn btn-warning" href="/host">Stenographer Login</a>
+              <a class="lawy btn btn-primary" href="/lawyer">Lawyer Login</a>
+              <a class="witn btn btn-info" href="/participant">Witness Login</a>
             </div>
           </div>
 
@@ -43,8 +43,11 @@
 
     </div>
   </div>
-<script>var x = document.URL;
-  console.log(x);
-    $('.url').append(x);
+<script>
+  var x = document.URL.split('/').pop();
+  $('.url').append(document.URL);
+    $('.judge, .sten').attr('href','/host/' + x);
+    $('.lawy').attr('href','/lawyer/' + x);
+    $('.witn').attr('href','/participant/' + x);
   </script>
 <% include footer %>
