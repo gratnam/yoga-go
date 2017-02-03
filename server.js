@@ -166,7 +166,7 @@ app.get('/delete/:archiveId', function(req, res) {
 
 // replace 3000 with process.env.PORT
 function init() {
-  app.listen(3000, function() {
+  app.listen(process.env.PORT, function() {
     console.log('Your app is now ready at http://localhost:'+process.env.PORT+'/');
   });
 }
