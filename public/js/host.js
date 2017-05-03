@@ -13,20 +13,6 @@ session.connect(apiKey, token, function(err, info) {
 var tokenBoot = {}
 var userInfo = {}
 
-OT.getAudioDevice(function(error, devices) {
-  audioInputDevices = devices.filter(function(element) {
-    return element.kind == "audioInput";
-  });
-  videoInputDevices = devices.filter(function(element) {
-    return element.kind == "videoInput";
-  });
-  for (var i = 0; i < audioInputDevices.length; i++) {
-    console.log("audio input device: ", devices);
-  }
-  for (i = 0; i < videoInputDevices.length; i++) {
-    console.log("video input device: ", videoInputDevices[i].deviceId);
-  }
-});
 
 var subHost;
 var subLawyer;
