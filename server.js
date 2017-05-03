@@ -5,8 +5,8 @@ var express = require('express'),
     OpenTok = require('opentok');
 
 // Verify that the API Key and API Secret are defined
-var apiKey = process.env.API_KEY,
-    apiSecret = process.env.API_SECRET;
+var apiKey = "45751912",
+    apiSecret = "fc5cf6d127b1547b15e91478e34111354bc5c10e";
 if (!apiKey || !apiSecret) {
   console.log('You must specify API_KEY and API_SECRET environment variables');
   process.exit(1);
@@ -64,7 +64,6 @@ app.get('/host/:name', function(req, res) {
   var sessionId = app.get('sessionId'),
       // generate a fresh token for this client
       token = opentok.generateToken(sessionId, { role: 'moderator' });
-
   res.render('host.ejs', {
     apiKey: apiKey,
     sessionId: sessionId,
@@ -87,7 +86,7 @@ app.get('/host/:name', function(req, res) {
 app.get('/lawyer/:name', function(req, res) {
   var sessionId = app.get('sessionId'),
       // generate a fresh token for this client
-      token = opentok.generateToken(sessionId, { role: 'publisher' });
+      token = opentok.generateToken(sessionId, { role: 'publisher', data: 'hello' });
 
   res.render('lawyer.ejs', {
     apiKey: apiKey,
@@ -166,7 +165,7 @@ app.get('/delete/:archiveId', function(req, res) {
 
 // replace 3000 with process.env.PORT
 function init() {
-  app.listen(process.env.PORT, function() {
+  app.listen(3000, function() {
     console.log('Your app is now ready at http://localhost:'+process.env.PORT+'/');
   });
 }

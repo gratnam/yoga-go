@@ -1,5 +1,5 @@
 var session = OT.initSession(sessionId),
-    publisher = OT.initPublisher("lawyers", { insertMode: "append", name: "lawyer" }),
+    publisher = OT.initPublisher("lawyers", { insertMode: "append", name: "lawyer", disableAudioProcessing: true }),
     archiveID = null;
 
 session.connect(apiKey, token, function(err, info) {
@@ -9,18 +9,24 @@ session.connect(apiKey, token, function(err, info) {
   session.publish(publisher);
 });
 
+var subHost;
+var subLawyer;
+var subPart;
 session.on('streamCreated', function(event) {
   if(event.stream.name === 'host'){
-    session.subscribe(event.stream, "publisher", { insertMode : "append" });
+    subHost = session.subscribe(event.stream, "publisher", { insertMode : "append" });
   }
   if(event.stream.name === 'participant'){
-    session.subscribe(event.stream, "subscribers", { insertMode: "append" });
+    subPart = session.subscribe(event.stream, "subscribers", { insertMode: "append" });
   }
   if(event.stream.name === 'lawyer'){
-    session.subscribe(event.stream, "lawyers", { insertMode: "append" });
+    subLawyer = session.subscribe(event.stream, "lawyers", { insertMode: "append" });
   }
 });
 
+session.on('connectionCreated', function(event) {
+  console.log(event);
+});
 
   //signal specific witness
   $('.object').click(function(event){

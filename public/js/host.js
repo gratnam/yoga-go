@@ -1,16 +1,36 @@
 var session = OT.initSession(sessionId);
 var archiveID = null;
-var publisher = OT.initPublisher("publisher", { insertMode: "append", name: "host" });
+var publisher = OT.initPublisher("publisher", { insertMode: "append", name: "host", disableAudioProcessing: true });
 
 session.connect(apiKey, token, function(err, info) {
   if(err) {
     alert(err.message || err);
-  }
+  } 
+    console.log(info);
     session.publish(publisher);
 });
 
 var tokenBoot = {}
 var userInfo = {}
+
+OT.getAudioDevice(function(error, devices) {
+  audioInputDevices = devices.filter(function(element) {
+    return element.kind == "audioInput";
+  });
+  videoInputDevices = devices.filter(function(element) {
+    return element.kind == "videoInput";
+  });
+  for (var i = 0; i < audioInputDevices.length; i++) {
+    console.log("audio input device: ", devices);
+  }
+  for (i = 0; i < videoInputDevices.length; i++) {
+    console.log("video input device: ", videoInputDevices[i].deviceId);
+  }
+});
+
+var subHost;
+var subLawyer;
+var subPart;
 
 session.on('streamCreated', function(event) {
   var ID = event.stream.streamId;
@@ -18,6 +38,7 @@ session.on('streamCreated', function(event) {
   var chatObj = event.stream.connection;
   var box = '<div id = "' + ID + '"></div>';
   var boot = '<div class="input-group"><span class="'+ ID +' input-group-btn"><button class="btn btn-default" type="button">Boot</button> </span> <form id="DM'+ID+'"> <input type="text" class="form-control" id="DMtext'+ID+'" placeholder="Direct message..."> </form></div>';
+
   
   tokenBoot[event.target.token] = ID;
   userInfo[ID] = {'streamObj': streamObj,
@@ -25,11 +46,12 @@ session.on('streamCreated', function(event) {
 
   if(event.stream.name === 'lawyer'){
     $("#lawyers").append(box);
-    session.subscribe(event.stream, ID, { insertMode : "append" });
+    subLawyer = session.subscribe(event.stream, ID, { insertMode : "append" });
+
   }
   if(event.stream.name === 'participant'){
     $("#subscribers").append(box);
-    session.subscribe(event.stream, ID, { insertMode: "append" });
+    subPart = session.subscribe(event.stream, ID, { insertMode: "append" });
     $("#" + ID).append(boot);
   }
 
@@ -111,6 +133,10 @@ session.on('connectionDestroyed', function(event) {
   $("#"+tokenBoot[event.target.token]).remove();
 });
 
+session.on('connectionCreated', function(event) {
+  console.log(event);
+});
+
 $(document).ready(function() {
   $(".start").click(function (event) {
     var options = $(".archive-options").serialize();
@@ -121,6 +147,7 @@ $(document).ready(function() {
     $.get("stop/" + archiveID);
   }).hide();
   $(".disconnect").click(function (){
+    console.log('disconnect');
     session.disconnect();
   });
   $('.trans').click(function(){
