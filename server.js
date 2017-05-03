@@ -5,8 +5,8 @@ var express = require('express'),
     OpenTok = require('opentok');
 
 // Verify that the API Key and API Secret are defined
-var apiKey = "45751912",
-    apiSecret = "fc5cf6d127b1547b15e91478e34111354bc5c10e";
+var apiKey = process.env.API_KEY,
+    apiSecret = process.env.API_SECRET;
 if (!apiKey || !apiSecret) {
   console.log('You must specify API_KEY and API_SECRET environment variables');
   process.exit(1);
@@ -165,7 +165,7 @@ app.get('/delete/:archiveId', function(req, res) {
 
 // replace 3000 with process.env.PORT
 function init() {
-  app.listen(3000, function() {
+  app.listen(process.env.PORT, function() {
     console.log('Your app is now ready at http://localhost:'+process.env.PORT+'/');
   });
 }
