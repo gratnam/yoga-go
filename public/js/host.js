@@ -30,16 +30,16 @@ session.on('streamCreated', function(event) {
   userInfo[ID] = {'streamObj': streamObj,
     'chatObj': chatObj};
 
-  if(event.stream.name === 'lawyer'){
-    $("#lawyers").append(box);
-    subLawyer = session.subscribe(event.stream, ID, { insertMode : "append" });
+  // if(event.stream.name === 'lawyer'){
+  //   $("#lawyers").append(box);
+  //   subLawyer = session.subscribe(event.stream, ID, { insertMode : "append" });
 
-  }
-  if(event.stream.name === 'participant'){
-    $("#subscribers").append(box);
-    subPart = session.subscribe(event.stream, ID, { insertMode: "append" });
-    $("#" + ID).append(boot);
-  }
+  // }
+  // if(event.stream.name === 'participant'){
+  //   $("#subscribers").append(box);
+  //   subPart = session.subscribe(event.stream, ID, { insertMode: "append" });
+  //   $("#" + ID).append(boot);
+  // }
 
   //force unpublish
   $("." + ID).click(function(){

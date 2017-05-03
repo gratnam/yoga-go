@@ -16,12 +16,12 @@ session.on('streamCreated', function(event) {
   if(event.stream.name === 'host'){
     subHost = session.subscribe(event.stream, "publisher", { insertMode : "append" });
   }
-  if(event.stream.name === 'participant'){
-    subPart = session.subscribe(event.stream, "subscribers", { insertMode: "append" });
-  }
-  if(event.stream.name === 'lawyer'){
-    subLawyer = session.subscribe(event.stream, "lawyers", { insertMode: "append" });
-  }
+  // if(event.stream.name === 'participant'){
+  //   subPart = session.subscribe(event.stream, "subscribers", { insertMode: "append" });
+  // }
+  // if(event.stream.name === 'lawyer'){
+  //   subLawyer = session.subscribe(event.stream, "lawyers", { insertMode: "append" });
+  // }
 });
 
 session.on('connectionCreated', function(event) {
